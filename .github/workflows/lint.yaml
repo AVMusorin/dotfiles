@@ -1,0 +1,19 @@
+---
+name: Lint Dotfiles
+
+on: [push, pull_request]  # yamllint disable-line rule:truthy
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Run ShellCheck
+        run: find . -type f -name '*.sh' -exec shellcheck {} +
+      - name: Install yamllint
+        run: sudo apt-get install -y yamllint
+      - name: Run yamllint
+        run: yamllint .
