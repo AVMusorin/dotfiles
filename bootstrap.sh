@@ -62,9 +62,8 @@ Options:
 EOL
 }
 
-OPTS=$(getopt -o h -l help,dry-run,verbose -- "$@")
 
-if [ "$?" -ne 0 ]; then
+if ! OPTS=$(getopt -o h -l help,dry-run,verbose -- "$@"); then
     echo "Failed to parse options" >&2
 fi
 
