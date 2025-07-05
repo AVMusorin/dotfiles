@@ -2,7 +2,6 @@
 
 set -e
 
-
 # Options
 VERBOSE=0
 DRY_RUN=0
@@ -119,6 +118,14 @@ echo "Symlinking..."
 
 # home directory dotfiles
 while IFS= read -r -d '' file; do
+    # don't link these files
+    ignore_files=(
+        ".gitmodules"
+    )
+    filename=$(basename "$file")
+    if printf "%s\n" "${ignore_files[@]}" | grep -qxF "$filename"; then
+        continue
+    fi
     process_file "$file"
 done < <(find . -maxdepth 1 -type f -name '.?*' -print0)
 
@@ -127,6 +134,14 @@ echo ".config directory"
 while IFS= read -r -d '' file; do
     process_file "$file"
 done < <(find ./.config -type f -print0)
+
+echo "Symlink tmux plugins"
+# symlink tmux plugins
+while IFS= read -r -d '' directory; do
+    name=$(basename "$directory")
+    mkdir -p "$HOME/.tmux/plugins"
+    ln -s  "$PWD/$directory" "$HOME/.tmux/plugins/$name"
+done < <(find ./tmux/plugins -mindepth 1 -maxdepth 1 -type d -print0)
 
 # TODO: check dead links
 
