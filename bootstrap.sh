@@ -49,7 +49,9 @@ function link_file() {
     if [[ "$DRY_RUN" -eq 1 ]]; then
         echo "[DRY_RUN] process $orig -> $new"
     else
-        rm "$orig"
+        if [[ -f "$orig" ]]; then
+            rm "$orig"
+        fi
         ln -s "$new" "$orig"
     fi
 }
