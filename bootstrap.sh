@@ -24,6 +24,21 @@ function cleanup() {
 
 trap cleanup INT
 
+function process_file() {
+    local file=$1 && shift
+
+    PROCESSED_FILES=$(( PROCESSED_FILES + 1 ))
+    orig_file="$HOME/$file"
+    source_file="$PWD/$file"
+    if [ -L "$orig_file" ]; then
+        echo "Symbolic link $orig_file exists, skip..."
+        return 0
+    fi
+    NEW_FILES=$(( NEW_FILES + 1 ))
+    backup_file "$orig_file" "$file"
+    link_file "$orig_file" "$source_file"
+}
+
 function link_file() {
     local orig=$1 && shift
     local new=$1 && shift
@@ -32,21 +47,22 @@ function link_file() {
         diff -bur --color=always "$orig" "$new" && true
     fi
 
-    backup_file "$orig"
     if [[ "$DRY_RUN" -eq 1 ]]; then
         echo "[DRY_RUN] process $orig -> $new"
     else
         rm "$orig"
-        ln -s "$new" "$orig" && echo "   ...linked"
+        ln -s "$new" "$orig"
     fi
 }
 
 function backup_file() {
-    local file=$1 && shift
+    local source=$1 && shift
+    local dest=$1 && shift
 
-    local filename
-    filename=$(basename "$file")
-    cp "$file" "$BACKUP_DIR/$filename"
+    local base_dir
+    base_dir=$(dirname "$dest")
+    mkdir -p "$BACKUP_DIR/$base_dir"
+    cp "$source" "$BACKUP_DIR/$file"
 }
 
 function help() {
@@ -101,17 +117,18 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 echo "Symlinking..."
 
+# home directory dotfiles
 while IFS= read -r -d '' file; do
-    PROCESSED_FILES=$(( PROCESSED_FILES + 1 ))
-    orig_file="$HOME/$file"
-    source_file="$PWD/$file"
-    if [ -L "$orig_file" ]; then
-        echo "Symbolic link $orig_file exists, skip..."
-        continue
-    fi
-    NEW_FILES=$(( NEW_FILES + 1 ))
-    link_file "$orig_file" "$source_file"
+    process_file "$file"
 done < <(find . -maxdepth 1 -type f -name '.?*' -print0)
+
+echo ".config directory"
+# .config directory files
+while IFS= read -r -d '' file; do
+    process_file "$file"
+done < <(find ./.config -type f -print0)
+
+# TODO: check dead links
 
 echo "Statistic:"
 echo "New files:       $NEW_FILES"
