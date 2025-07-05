@@ -34,7 +34,9 @@ function process_file() {
         return 0
     fi
     NEW_FILES=$(( NEW_FILES + 1 ))
-    backup_file "$orig_file" "$file"
+    if [[ -f "$orig_file" ]]; then
+        backup_file "$orig_file" "$file"
+    fi
     link_file "$orig_file" "$source_file"
 }
 
