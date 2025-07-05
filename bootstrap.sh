@@ -54,6 +54,9 @@ function link_file() {
         if [[ -f "$orig" ]]; then
             rm "$orig"
         fi
+        local base_folder
+        base_folder=$(dirname "$orig")
+        mkdir -p "$base_folder"
         ln -s "$new" "$orig"
     fi
 }
