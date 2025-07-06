@@ -147,7 +147,12 @@ echo "Symlink tmux plugins"
 while IFS= read -r -d '' directory; do
     name=$(basename "$directory")
     mkdir -p "$HOME/.tmux/plugins"
-    ln -sf  "$PWD/$directory" "$HOME/.tmux/plugins/$name"
+    if [ -L "$HOME/.tmux/plugins/$name" ]; then
+        echo "Symlink $PWD/$directory $HOME/.tmux/plugins/$name exists..."
+        continue
+    fi
+    echo "Symlink $PWD/$directory $HOME/.tmux/plugins/$name"
+    ln -s  "$PWD/$directory" "$HOME/.tmux/plugins/$name"
 done < <(find ./tmux/plugins -mindepth 1 -maxdepth 1 -type d -print0)
 
 # TODO: check dead links
