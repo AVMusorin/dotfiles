@@ -52,6 +52,13 @@ return packer.startup(function(use)
   use "folke/which-key.nvim"
   use 'ciaranm/detectindent'
   use "rafcamlet/nvim-luapad"
+  use {
+    "folke/persistence.nvim",
+    config = function()
+        require("persistence").setup()
+    end,
+    lazy = false, -- load on startup (for auto-restore)
+  }
 
   -- Colorschema
   use "folke/tokyonight.nvim" -- Color scheme
