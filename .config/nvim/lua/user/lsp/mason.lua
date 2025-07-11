@@ -14,6 +14,7 @@ local servers = {
   "gopls",
   "dockerls",
   "docker_compose_language_service",
+  "ansiblels",
 }
 
 local settings = {
