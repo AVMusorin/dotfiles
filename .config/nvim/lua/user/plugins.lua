@@ -97,6 +97,19 @@ return packer.startup(function(use)
     requires = {"nvim-telescope/telescope.nvim"}
   }
 
+  -- Lua development
+  use "folke/neodev.nvim"
+  use {
+    "folke/lazydev.nvim",
+    ft = "lua", -- lazy-load on Lua files
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("lazydev").setup()
+    end,
+  }
+
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
