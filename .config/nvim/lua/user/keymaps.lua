@@ -41,6 +41,22 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>bc", ":bdelete<CR> <BAR> :bprevious<CR>", opts) -- close current buffer
 keymap("n", "<leader>bp", ":b#<CR>", opts) -- toggle between the last two buffers
 
+vim.api.nvim_create_user_command("CloseOtherBuffers", function()
+    local current = vim.api.nvim_get_current_buf()
+    for k, _ in pairs(vim.api.nvim_list_bufs()) do
+        -- Remove even unloaded buffers, because I use persistent state for buffers and they
+        -- are unloaded in the beginning
+        if k ~= current then
+            local ok, listed = pcall(vim.api.nvim_get_option_value, "buflisted", { buf = k })
+            if ok and listed then
+                vim.api.nvim_buf_delete(k, { force = false })
+            end
+        end
+    end
+end, {
+desc = "Close all other buffers except the current one"
+})
+
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
