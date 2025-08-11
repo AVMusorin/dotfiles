@@ -1,0 +1,3 @@
+[terminal]
+# Allow OSC52.
+osc52 = "CopyPaste"
