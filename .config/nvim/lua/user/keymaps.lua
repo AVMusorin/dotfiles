@@ -70,6 +70,8 @@ keymap("i", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Do not replace yanked text after past
 keymap("v", "p", '"_dP', opts)
+keymap("x", "p", [["_dP]], opts)
+keymap("x", "P", [["_dP]], opts)
 
 keymap("n", "<leader>ff", "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<CR>", opts)
 keymap("n", "<leader>fg", "<cmd>lua require'telescope.builtin'.git_files()<CR>", opts)
