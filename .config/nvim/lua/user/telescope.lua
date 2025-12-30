@@ -84,7 +84,31 @@ telescope.setup {
     -- Default configuration for builtin pickers goes here:
     find_files = {
       hidden = true,
-      find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" }
+      find_command = {
+            "rg",
+            "--files",
+            "--hidden",
+            "--glob", "!**/.git/*",
+            "--glob", "!**/contrib/*", -- for ClickHouse
+      }
+    },
+    live_grep = {
+      additional_args = function()
+        return {
+            "--hidden",
+            "--glob", "!**/.git/*",
+            "--glob", "!**/contrib/*", -- for ClickHouse
+        }
+        end,
+    },
+    grep_string = {
+        additional_args = function()
+          return {
+            "--hidden",
+            "--glob", "!**/.git/*",
+            "--glob", "!**/contrib/*", -- for ClickHouse
+          }
+        end,
     },
     oldfiles = {
       prompt_title = "Last 10 Files",
