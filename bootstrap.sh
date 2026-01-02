@@ -155,6 +155,9 @@ while IFS= read -r -d '' directory; do
     ln -s  "$PWD/$directory" "$HOME/.tmux/plugins/$name"
 done < <(find ./tmux/plugins -mindepth 1 -maxdepth 1 -type d -print0)
 
+echo "HOME directory"
+process_file ".gdbinit"
+
 # TODO: check dead links
 
 echo "Statistic:"
