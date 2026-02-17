@@ -3,18 +3,20 @@ evdev:atkbd:*
  KEYBOARD_KEY_01=capslock   # Esc -> CapsLock
  KEYBOARD_KEY_38=leftctrl   # Left Alt -> Left Ctrl
  KEYBOARD_KEY_1d=leftalt    # Left Ctrl -> Left Alt
- KEYBOARD_KEY_0f=tab        # Ensure Tab stays Tab (override old rule)
+ KEYBOARD_KEY_0f=tab        # Ensure Tab stays Tab
 
 evdev:input:b0003v*p*e*
- KEYBOARD_KEY_70039=esc
- KEYBOARD_KEY_70029=capslock
- KEYBOARD_KEY_700e2=leftctrl
- KEYBOARD_KEY_700e0=leftalt
- KEYBOARD_KEY_7002b=tab      # Ensure Tab stays Tab
+ KEYBOARD_KEY_70039=esc         # CapsLock -> Esc
+ KEYBOARD_KEY_70029=capslock    # Esc -> CapsLock
+ KEYBOARD_KEY_700e0=leftalt     # Physical Alt/Option -> LeftAlt
+ KEYBOARD_KEY_700e2=leftmeta    # Physical Ctrl -> Win (Meta)
+ KEYBOARD_KEY_700e3=leftctrl    # Physical Win/Cmd -> Ctrl
+ KEYBOARD_KEY_7002b=tab         # Ensure Tab stays Tab
 
 evdev:input:b0005v*p*e*
- KEYBOARD_KEY_70039=esc
- KEYBOARD_KEY_70029=capslock
- KEYBOARD_KEY_700e2=leftctrl
- KEYBOARD_KEY_700e0=leftalt
- KEYBOARD_KEY_7002b=tab      # Ensure Tab stays Tab
+ KEYBOARD_KEY_70039=esc         # CapsLock -> Esc
+ KEYBOARD_KEY_70029=capslock    # Esc -> CapsLock
+ KEYBOARD_KEY_700e0=leftalt     # Physical Alt/Option -> LeftAlt
+ KEYBOARD_KEY_700e2=leftmeta    # Physical Ctrl -> Win (Meta)
+ KEYBOARD_KEY_700e3=leftctrl    # Physical Win/Cmd -> Ctrl
+ KEYBOARD_KEY_7002b=tab         # Ensure Tab stays Tab
