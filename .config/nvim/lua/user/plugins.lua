@@ -77,9 +77,7 @@ return packer.startup(function(use)
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- Lsp
-  use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/mason.nvim" -- simple to use language server installer
-  use "williamboman/mason-lspconfig.nvim" -- simple to use language server installer
+  use "neovim/nvim-lspconfig" -- default server configs for vim.lsp.enable()
   use {
     'j-hui/fidget.nvim',
     -- tag = 'legacy',
@@ -113,6 +111,7 @@ return packer.startup(function(use)
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     run = ":TSUpdate",
   }
 
