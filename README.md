@@ -4,6 +4,26 @@
 ./bootstrap.sh
 ```
 
+### Neovim icons
+
+```bash
+sudo pacman -S ttf-jetbrains-mono-nerd
+```
+
+### Treesitter error after upgrading to Neovim 0.12
+
+
+```bash
+sudo pacman -S tree-sitter-cli base-devel
+```
+
+Run `:PackerSync`, restart Neovim, then update and install parsers:
+
+```vim
+:TSUpdate
+:TSInstall lua vim vimdoc markdown markdown_inline
+```
+
 ### Language servers
 
 Servers are no longer managed by mason — install them yourself and keep the
